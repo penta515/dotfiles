@@ -47,7 +47,14 @@ if [ $UID = 0 ]; then
 fi
 
 ## PROMPT
-PROMPT=$'[ %~ ] → '
+case `whoami` in
+    "ec2-user")
+        PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
+        ;;
+    *)
+        PROMPT=$'[ %~ ] → '
+        ;;
+esac
 
 # ==========================
 # completion settings

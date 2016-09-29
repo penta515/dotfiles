@@ -218,9 +218,6 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-
-
-
 " ------------------------------------
 " dein setting
 " ------------------------------------
@@ -251,14 +248,6 @@ call dein#add('scrooloose/syntastic')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('itchyny/lightline.vim')
 call dein#add('tomasr/molokai')
-call dein#add('Shougo/vimproc', {
-         \ 'build':     {
-         \   'windows': 'make -f make_mingw32.mak',
-         \   'cygwin':  'make -f make_cygwin.mak',
-         \   'mac':     'make -f make_mac.mak',
-         \   'unix':    'make -f make_unix.mak',
-         \    },
-         \ })
 
 " Required:
 call dein#end()

@@ -267,13 +267,6 @@ function _update_vcs_info_msg() {
 add-zsh-hook precmd _update_vcs_info_msg
 
 # ==========================
-# tmux settings
-# =========================
-# tmux自動起動
-alias tmux='tmux -u'
-[[ -z "$TMUX" && ! -z "$PS1" ]] && tmux
-
-# ==========================
 # rbenv settings
 # =========================
 eval "$(rbenv init -)"

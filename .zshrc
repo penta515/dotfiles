@@ -60,7 +60,7 @@ esac
 # completion settings
 # =========================
 # zsh-completions で補完機能を強化する
-fpath=("$HOME/zsh_plugins/zsh-completions/src" $fpath)
+fpath=(/usr/local/share/zsh-completions/src $fpath)
 autoload -U compinit
 compinit -u
 

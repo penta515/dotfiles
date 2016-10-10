@@ -13,6 +13,16 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 
+augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
+    autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd BufNewFile,BufRead *.rake setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
+" 保存時に行末の空白を自動で削除
+autocmd BufWritePre * :%s/\s\+$//ge
+
 " バックスペースキーで削除できるものを指定
 " indent  : 行頭の空白
 " eol     : 改行
@@ -45,7 +55,7 @@ endif
 match ZenkakuSpace /　/
 
 "タブ、空白、改行の可視化
-set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
+set listchars=tab:>.,trail:_,extends:>,precedes:<,nbsp:%
 
 " 勝手にコメントアウトしない
 augroup auto_comment_off
@@ -104,7 +114,7 @@ noremap <C-e> <Esc>$a
 noremap <C-a> <Esc>^i
 
 " ------------------------------------
-" status line 
+" status line
 " ------------------------------------
 set laststatus=2
 set t_Co=256
@@ -130,10 +140,6 @@ set visualbell
 filetype plugin on
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-autocmd FileType python setl expandtab tabstop=4 shiftwidth=4 softtabstop=4
-
-" syntasticでpep8, pyflakesを使う
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 
 " ------------------------------------
 " pluging setting
@@ -145,6 +151,8 @@ let g:gitgutter_highlight_lines = 1
 nmap <C-K> <Plug>(caw:i:toggle)
 vmap <C-K> <Plug>(caw:i:toggle)
 
+" syntasticでpep8, pyflakesを使う
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
@@ -183,12 +191,22 @@ function! s:my_cr_function()
   "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+autocmd FileType python setlocal completeopt-=preview
+
+" Plugin key-mappings.
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1
@@ -256,5 +274,5 @@ call dein#end()
 filetype plugin indent on
 
 if dein#check_install()
-  call dein#install()	
+  call dein#install()
 endif

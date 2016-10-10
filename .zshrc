@@ -100,6 +100,10 @@ export PATH="/usr/local/bin/rbenv/bin:$PATH"
 # heroku toolbelt のパス設定
 export PATH="/usr/local/heroku/bin:$PATH"
 
+# pyenv のパス設定
+export PYENV_ROOT="${HOME}/.pyenv"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
+
 # ==========================
 # vcs_info settings
 # http://qiita.com/mollifier/items/8d5a627d773758dd8078
@@ -280,3 +284,13 @@ add-zsh-hook precmd _update_vcs_info_msg
 # rbenv settings
 # =========================
 eval "$(rbenv init -)"
+
+# ==========================
+# pyenv settings
+# =========================
+eval "$(pyenv init -)"
+
+# =========================
+# virtualenv settings
+# =======================
+eval "$(pyenv virtualenv-init -)"

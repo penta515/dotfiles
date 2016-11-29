@@ -48,7 +48,7 @@ fi
 
 ## PROMPT
 case `whoami` in
-    "ec2-user")
+    "yamada")
         PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
         ;;
     *)

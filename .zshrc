@@ -95,7 +95,7 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.nodebrew/current/bin:$PATH"
 
 # rbenv のパス設定
-export PATH="/usr/local/bin/rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
 
 # heroku toolbelt のパス設定
 export PATH="/usr/local/heroku/bin:$PATH"

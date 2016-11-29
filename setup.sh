@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOT_FILES=(.zshrc .vimrc)
+DOT_FILES=(.zshrc .vimrc .tmux.conf)
 
 mkdir $HOME/.vim
 

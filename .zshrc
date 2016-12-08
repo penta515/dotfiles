@@ -40,6 +40,9 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 
+# Less の文字コードを UTF-8 に設定する
+export LESSCHARSET=utf-8
+
 # rootは履歴を残さない
 if [ $UID = 0 ]; then
   unset HISTFILE

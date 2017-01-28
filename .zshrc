@@ -49,16 +49,6 @@ if [ $UID = 0 ]; then
   SAVEHIST=0
 fi
 
-## PROMPT
-case `whoami` in
-    "yamada")
-        PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
-        ;;
-    *)
-        PROMPT=$'[ %~ ] → '
-        ;;
-esac
-
 # ==========================
 # completion settings
 # =========================
@@ -297,3 +287,23 @@ eval "$(pyenv init -)"
 # virtualenv settings
 # =======================
 eval "$(pyenv virtualenv-init -)"
+
+# =========================
+# PROMPT settings
+# =======================
+case `whoami` in
+    "yamada")
+        PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
+        ;;
+    "penta515")
+        PROMPT=$'[ %~ ] → '
+        if ! is_screen_or_tmux_running && shell_has_started_interactively; then
+            for cmd in tmux tscreen screen; do
+                if whence $cmd >/dev/null 2>/dev/null; then
+                    $(resolve_alias "$cmd")
+                    break
+                fi
+            done
+        fi
+        ;;
+esac

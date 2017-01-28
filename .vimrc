@@ -161,6 +161,8 @@ vmap <C-K> <Plug>(caw:i:toggle)
 
 " syntasticでpep8, pyflakesを使う
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
 
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.

@@ -36,7 +36,10 @@ setopt print_eight_bit
 # 色を使用出来るようにする
 autoload -Uz colors
 
-set expandtab
+# ヒストリに保存するときに余分なスペースを削除する
+setopt hist_reduce_blanks
+
+set ehist_reduce_blankxpandtab
 set tabstop=2
 set shiftwidth=2
 

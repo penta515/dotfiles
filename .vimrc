@@ -136,9 +136,6 @@ let g:lightline = {
 " 構文毎に色分けする
 syntax on
 
-" カラースキーム
-colorscheme molokai
-
 " ビープ音をすべて視覚表示する
 set visualbell
 
@@ -275,7 +272,7 @@ call dein#add('nathanaelkane/vim-indent-guides')
 call dein#add('scrooloose/syntastic')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('itchyny/lightline.vim')
-call dein#add('tomasr/molokai')
+call dein#add('morhetz/gruvbox')
 
 " Required:
 call dein#end()
@@ -286,3 +283,7 @@ filetype plugin indent on
 if dein#check_install()
   call dein#install()
 endif
+
+set background=dark
+colorscheme gruvbox
+syntax on

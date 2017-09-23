@@ -23,3 +23,5 @@ resolve_alias() {
     done
     echo "$cmd"
 }
+autoload -Uz compinit
+compinit

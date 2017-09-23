@@ -85,7 +85,7 @@ zstyle ':completion:*:default' menu select=1
 # ==========================
 # path settings
 # =========================
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/pgsql-9.6/bin$PATH"
 
 # nodebrew のパス設定
 export PATH="$HOME/.nodebrew/current/bin:$PATH"
@@ -309,4 +309,10 @@ case `whoami` in
             done
         fi
         ;;
+    * )
+        PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
+        ;;
 esac
+
+export NVM_DIR="/home/ec2-user/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

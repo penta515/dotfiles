@@ -52,6 +52,9 @@ if [ $UID = 0 ]; then
   SAVEHIST=0
 fi
 
+# git のデフォルトエディタを設定
+export GIT_EDITOR=vim
+
 # ==========================
 # completion settings
 # =========================
@@ -282,6 +285,12 @@ add-zsh-hook precmd _update_vcs_info_msg
 eval "$(rbenv init -)"
 
 # ==========================
+# nvm settings
+# =========================
+export NVM_DIR="~/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# ==========================
 # pyenv settings
 # =========================
 eval "$(pyenv init -)"
@@ -296,7 +305,7 @@ eval "$(pyenv virtualenv-init -)"
 # =======================
 case `whoami` in
     "yamada")
-        PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
+        PROMPT=$'%F{red}[%f %~ %F{red}]%f → '
         ;;
     "penta515")
         PROMPT=$'[ %~ ] → '
@@ -310,9 +319,6 @@ case `whoami` in
         fi
         ;;
     * )
-        PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
+        PROMPT=$'%F{red}[%f %~ %F{red}]%f → '
         ;;
 esac
-
-export NVM_DIR="/home/ec2-user/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

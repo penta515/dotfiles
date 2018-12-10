@@ -272,7 +272,7 @@ call dein#add('nathanaelkane/vim-indent-guides')
 call dein#add('scrooloose/syntastic')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('itchyny/lightline.vim')
-call dein#add('morhetz/gruvbox')
+call dein#add('ajmwagar/vim-deus')
 
 " Required:
 call dein#end()
@@ -285,5 +285,5 @@ if dein#check_install()
 endif
 
 set background=dark
-colorscheme gruvbox
+colorscheme deus
 syntax on

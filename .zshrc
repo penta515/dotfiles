@@ -88,7 +88,7 @@ zstyle ':completion:*:default' menu select=1
 # ==========================
 # path settings
 # =========================
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/pgsql-9.6/bin$PATH"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:$PATH"
 
 # nodebrew のパス設定
 export PATH="$HOME/.nodebrew/current/bin:$PATH"
@@ -285,12 +285,6 @@ add-zsh-hook precmd _update_vcs_info_msg
 eval "$(rbenv init -)"
 
 # ==========================
-# nvm settings
-# =========================
-export NVM_DIR="~/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# ==========================
 # pyenv settings
 # =========================
 eval "$(pyenv init -)"
@@ -303,22 +297,4 @@ eval "$(pyenv virtualenv-init -)"
 # =========================
 # PROMPT settings
 # =======================
-case `whoami` in
-    "yamada")
-        PROMPT=$'%F{red}[%f %~ %F{red}]%f → '
-        ;;
-    "penta515")
-        PROMPT=$'[ %~ ] → '
-        if ! is_screen_or_tmux_running && shell_has_started_interactively; then
-            for cmd in tmux tscreen screen; do
-                if whence $cmd >/dev/null 2>/dev/null; then
-                    $(resolve_alias "$cmd")
-                    break
-                fi
-            done
-        fi
-        ;;
-    * )
-        PROMPT=$'%F{red}[%f %~ %F{red}]%f → '
-        ;;
-esac
+PROMPT=$'%F{green}[%f %~ %F{green}]%f → '

@@ -10,8 +10,11 @@ set cursorline
 " タブの挿入設定
 set smarttab
 set expandtab
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
+
+" 81文字目に縦の線を表示する
+set cc=81
 
 augroup fileTypeIndent
     autocmd!
@@ -93,6 +96,34 @@ set matchpairs& matchpairs+=<:>
 highlight LineNr ctermfg=darkyellow
 
 " ------------------------------------
+" syntastic setting
+" ------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [
+  \ 'ruby', 'javascript','coffee', 'scss', 'html', 'haml', 'slim', 'sh',
+  \ 'spec', 'vim', 'zsh', 'sass', 'eruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_javascript_checkers=['eslint']
+let g:syntastic_coffee_checkers = ['coffeelint']
+let g:syntastic_scss_checkers = ['scss_lint']
+
+let g:syntastic_error_symbol='❌'
+let g:syntastic_style_error_symbol = '❌'
+let g:syntastic_warning_symbol = '🚧'
+let g:syntastic_style_warning_symbol = '🚧'
+
+let g:syntastic_ruby_rubocop_exe = 'bundle exec rubocop'
+
+" ------------------------------------
 " file encode setting
 " ------------------------------------
 " 文字コード
@@ -155,11 +186,6 @@ let g:gitgutter_highlight_lines = 1
 " caw.vim.git C-k でまとめてコメントアウト
 nmap <C-K> <Plug>(caw:i:toggle)
 vmap <C-K> <Plug>(caw:i:toggle)
-
-" syntasticでpep8, pyflakesを使う
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
-let g:syntastic_ruby_checkers = ['rubocop']
 
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.

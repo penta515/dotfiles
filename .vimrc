@@ -272,6 +272,11 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " ------------------------------------
 " dein setting
 " ------------------------------------
+if (!isdirectory(expand('$HOME/.vim/repos/github.com/Shougo/dein.vim')))
+  call system(expand('mkdir -p $HOME/.vim/repos/github.com'))
+  call system(expand('git clone https://github.com/Shougo/dein.vim $HOME/.vim/repos/github.com/Shougo/dein.vim'))
+endif
+
 if &compatible
   set nocompatible
 endif

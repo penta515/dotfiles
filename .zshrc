@@ -103,6 +103,9 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PYENV_ROOT="${HOME}/.pyenv"
 export PATH="${PYENV_ROOT}/bin:${PATH}"
 
+# postgresql のパス設定
+export PATH="/usr/local/opt/postgresql@9.6/bin:${PATH}"
+
 # ==========================
 # vcs_info settings
 # http://qiita.com/mollifier/items/8d5a627d773758dd8078
@@ -298,3 +301,8 @@ eval "$(pyenv virtualenv-init -)"
 # PROMPT settings
 # =======================
 PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
+
+# =========================
+# tmux settings
+# =======================
+[[ -z "$TMUX" && ! -z "$PS1" ]] && exec tmux

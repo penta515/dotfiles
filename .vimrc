@@ -17,10 +17,10 @@ set shiftwidth=2
 set cc=81
 
 augroup fileTypeIndent
-    autocmd!
-    autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
-    autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd BufNewFile,BufRead *.rake setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd!
+  autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.rake setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
 " 保存時に行末の空白を自動で削除
@@ -48,19 +48,19 @@ endfunction
 
 " 最後のカーソル位置を復元
 if has("autocmd")
-    autocmd BufReadPost *
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
+  autocmd BufReadPost *
+        \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+        \   exe "normal! g'\"" |
+        \ endif
 endif
 
 if has('syntax')
   augroup ZenkakuSpace
-  autocmd!
-  autocmd ColorScheme       * call ZenkakuSpace()
-  autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
- augroup END
- call ZenkakuSpace()
+    autocmd!
+    autocmd ColorScheme       * call ZenkakuSpace()
+    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+  augroup END
+  call ZenkakuSpace()
 endif
 
 match ZenkakuSpace /　/
@@ -109,8 +109,8 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [
-  \ 'ruby', 'javascript','coffee', 'scss', 'html', 'haml', 'slim', 'sh',
-  \ 'spec', 'vim', 'zsh', 'sass', 'eruby'] }
+      \ 'ruby', 'javascript','coffee', 'scss', 'html', 'haml', 'slim', 'sh',
+      \ 'spec', 'vim', 'zsh', 'sass', 'eruby'] }
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_coffee_checkers = ['coffeelint']
@@ -147,10 +147,15 @@ nnoremap <Tab> %
 vnoremap <Tab> %
 
 " C-a, C-e で行頭と行末に移動する
-inoremap <C-e> <Esc>$a
-inoremap <C-a> <Esc>^i
-noremap <C-e> <Esc>$a
-noremap <C-a> <Esc>^i
+" inoremap <C-e> <Esc>$a
+" inoremap <C-a> <Esc>^i
+" noremap <C-e> <Esc>$a
+" noremap <C-a> <Esc>^i
+
+inoremap <C-e> $
+inoremap <C-a> ^
+noremap <C-e> $
+noremap <C-a> ^
 
 " ------------------------------------
 " status line
@@ -200,14 +205,14 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+      \ 'default' : '',
+      \ 'vimshell' : $HOME.'/.vimshell_hist',
+      \ 'scheme' : $HOME.'/.gosh_completions'
+      \ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 

@@ -85,6 +85,8 @@ zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 ## 補完候補のカーソル選択を有効に
 zstyle ':completion:*:default' menu select=1
 
+alias ctags="`brew --prefix`/bin/ctags"
+
 # ==========================
 # path settings
 # =========================
@@ -105,6 +107,10 @@ export PATH="${PYENV_ROOT}/bin:${PATH}"
 
 # postgresql のパス設定
 export PATH="/usr/local/opt/postgresql@9.6/bin:${PATH}"
+
+# go のパス設定
+export GOPATH=~/go
+export PATH=$GOPATH/bin:$PATH
 
 # ==========================
 # vcs_info settings

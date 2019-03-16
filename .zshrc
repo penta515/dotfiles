@@ -112,6 +112,9 @@ export PATH="/usr/local/opt/postgresql@9.6/bin:${PATH}"
 export GOPATH=~/go
 export PATH=$GOPATH/bin:$PATH
 
+# avr-gcc のパス設定
+export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
+
 # ==========================
 # vcs_info settings
 # http://qiita.com/mollifier/items/8d5a627d773758dd8078

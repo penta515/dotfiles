@@ -321,5 +321,5 @@ if dein#check_install()
 endif
 
 set background=dark
-colorscheme deus
 syntax on
+colorscheme deus

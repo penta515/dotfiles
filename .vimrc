@@ -1,4 +1,34 @@
 " ------------------------------------
+" dein setting
+" ------------------------------------
+if &compatible
+  set nocompatible
+endif
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+if !isdirectory(s:dein_repo_dir)
+  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+endif
+execute 'set runtimepath^=' . s:dein_repo_dir
+
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+
+  let s:toml = '~/.dein.toml'
+  let s:lazy_toml = '~/.dein_lazy.toml'
+  call dein#load_toml(s:toml, {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+if dein#check_install()
+  call dein#install()
+endif
+
+" ------------------------------------
 " general setting
 " ------------------------------------
 " フォント設定
@@ -12,9 +42,6 @@ set smarttab
 set expandtab
 set tabstop=2
 set shiftwidth=2
-
-" 81文字目に縦の線を表示する
-set cc=81
 
 augroup fileTypeIndent
   autocmd!
@@ -38,21 +65,10 @@ set number
 " 検索で大文字小文字を区別しない
 set ignorecase
 
-" クリップボードを共有
-set clipboard=unnamed,autoselect
-
 "全角スペースをハイライト表示する
 function! ZenkakuSpace()
   highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
 endfunction
-
-" 最後のカーソル位置を復元
-if has("autocmd")
-  autocmd BufReadPost *
-        \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-        \   exe "normal! g'\"" |
-        \ endif
-endif
 
 if has('syntax')
   augroup ZenkakuSpace
@@ -63,9 +79,15 @@ if has('syntax')
   call ZenkakuSpace()
 endif
 
-match ZenkakuSpace /　/
+" 最後のカーソル位置を復元する
+if has("autocmd")
+  autocmd BufReadPost *
+        \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+        \   exe "normal! g'\"" |
+        \ endif
+endif
 
-"タブ、空白、改行の可視化
+"タブ、空白、改行の可視化する
 set listchars=tab:>.,trail:_,extends:>,precedes:<,nbsp:%
 
 " 勝手にコメントアウトしない
@@ -92,16 +114,9 @@ set textwidth=0
 " 対応括弧に'<'と'>'のペアを追加する
 set matchpairs& matchpairs+=<:>
 
-" 行番号の色
-highlight LineNr ctermfg=darkyellow
-
 " ------------------------------------
 " syntastic setting
 " ------------------------------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
@@ -111,15 +126,16 @@ let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [
       \ 'ruby', 'javascript','coffee', 'scss', 'html', 'haml', 'slim', 'sh',
       \ 'spec', 'vim', 'zsh', 'sass', 'eruby'] }
+
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_coffee_checkers = ['coffeelint']
 let g:syntastic_scss_checkers = ['scss_lint']
 
-let g:syntastic_error_symbol='❌'
-let g:syntastic_style_error_symbol = '❌'
-let g:syntastic_warning_symbol = '🚧'
-let g:syntastic_style_warning_symbol = '🚧'
+let g:syntastic_error_symbol='x'
+let g:syntastic_style_error_symbol = 'x'
+let g:syntastic_warning_symbol = 'w'
+let g:syntastic_style_warning_symbol = 'w'
 
 let g:syntastic_ruby_rubocop_exe = 'bundle exec rubocop'
 
@@ -147,33 +163,22 @@ nnoremap <Tab> %
 vnoremap <Tab> %
 
 " C-a, C-e で行頭と行末に移動する
-" inoremap <C-e> <Esc>$a
-" inoremap <C-a> <Esc>^i
-" noremap <C-e> <Esc>$a
-" noremap <C-a> <Esc>^i
-
-inoremap <C-e> $
-inoremap <C-a> ^
-noremap <C-e> $
-noremap <C-a> ^
+inoremap <C-e> <Esc>$
+inoremap <C-a> <Esc>^
+noremap <C-e> <Esc>$
+noremap <C-a> <Esc>^
 
 " ------------------------------------
 " status line
 " ------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 set laststatus=2
 set t_Co=256
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
-
-" ------------------------------------
-" color setting
-" ------------------------------------
-" 構文毎に色分けする
-syntax on
-
-" ビープ音をすべて視覚表示する
-set visualbell
 
 " ------------------------------------
 " python setting
@@ -185,141 +190,30 @@ autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,exc
 " ------------------------------------
 " pluging setting
 " ------------------------------------
-" vim-gitgutter で変更のある行をハイライト
-let g:gitgutter_highlight_lines = 1
-
 " caw.vim.git C-k でまとめてコメントアウト
 nmap <C-K> <Plug>(caw:i:toggle)
 vmap <C-K> <Plug>(caw:i:toggle)
 
-"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-      \ 'default' : '',
-      \ 'vimshell' : $HOME.'/.vimshell_hist',
-      \ 'scheme' : $HOME.'/.gosh_completions'
-      \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-autocmd FileType python setlocal completeopt-=preview
-
-" Plugin key-mappings.
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
 " ------------------------------------
-" dein setting
+" color setting
 " ------------------------------------
-if (!isdirectory(expand('$HOME/.vim/repos/github.com/Shougo/dein.vim')))
-  call system(expand('mkdir -p $HOME/.vim/repos/github.com'))
-  call system(expand('git clone https://github.com/Shougo/dein.vim $HOME/.vim/repos/github.com/Shougo/dein.vim'))
-endif
-
-if &compatible
-  set nocompatible
-endif
-
-" Required:
-set runtimepath^=~/.vim/repos/github.com/Shougo/dein.vim
-
-" Required:
-call dein#begin(expand('~/.vim'))
-
-" Let dein manage dein
-" Require:
-call dein#add('shougo/dein.vim')
-
-" Add or remove your plugins here:
-call dein#add('Shougo/neosnippet')
-call dein#add('Shougo/neosnippet-snippets')
-call dein#add('Shougo/neocomplete')
-call dein#add('honza/vim-snippets')
-call dein#add('ConradIrwin/vim-bracketed-paste')
-call dein#add('tpope/vim-fugitive')
-call dein#add('tyru/caw.vim.git')
-call dein#add('nathanaelkane/vim-indent-guides')
-call dein#add('scrooloose/syntastic')
-call dein#add('airblade/vim-gitgutter')
-call dein#add('itchyny/lightline.vim')
-call dein#add('ajmwagar/vim-deus')
-
-" Required:
-call dein#end()
-
-" Required:
-filetype plugin indent on
-
-if dein#check_install()
-  call dein#install()
-endif
-
+syntax enable
 set background=dark
-syntax on
 colorscheme deus
+
+" ビープ音をすべて視覚表示する
+set visualbell
+
+let  g:gitgutter_max_signs  =  500
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+nnoremap ww <C-w>w
+nnoremap wj <C-w>j
+nnoremap wk <C-w>k
+nnoremap wl <C-w>l
+nnoremap wh <C-w>h

@@ -54,6 +54,7 @@ fi
 
 # git のデフォルトエディタを設定
 export GIT_EDITOR=vim
+alias vim='nvim'
 
 # ==========================
 # completion settings
@@ -85,12 +86,10 @@ zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 ## 補完候補のカーソル選択を有効に
 zstyle ':completion:*:default' menu select=1
 
-alias ctags="`brew --prefix`/bin/ctags"
-
 # ==========================
 # path settings
 # =========================
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:~/.npm-global/bin:$PATH"
 
 # nodebrew のパス設定
 export PATH="$HOME/.nodebrew/current/bin:$PATH"
@@ -294,24 +293,50 @@ add-zsh-hook precmd _update_vcs_info_msg
 # ==========================
 # rbenv settings
 # =========================
-eval "$(rbenv init -)"
+if command -v rbenv 1>/dev/null 2>&1; then eval "$(rbenv init -)"; fi
 
 # ==========================
 # pyenv settings
 # =========================
-eval "$(pyenv init -)"
+if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
 
 # =========================
 # virtualenv settings
 # =======================
-eval "$(pyenv virtualenv-init -)"
+if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv virtualenv-init -)"; fi
+
+# =========================
+# tmux settings
+# =======================
+type tmux > /dev/null 2>&1
+if [[ $? -eq 0 ]]; then
+  # get the IDs
+  ID="`tmux list-sessions`"
+  if [[ -z "$ID" ]]; then
+    tmux new-session
+  fi
+  ID="`echo $ID | $PERCOL | cut -d: -f1`"
+  tmux attach-session -t "$ID"
+fi
+
+# =========================
+# nvm settings
+#
+# https://github.com/nvm-sh/nvm#installing-and-updating
+# =======================
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# =========================
+# fzf settings
+#
+# https://github.com/junegunn/fzf#installation
+# =======================
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # =========================
 # PROMPT settings
 # =======================
 PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
 
-# =========================
-# tmux settings
-# =======================
-[[ -z "$TMUX" && ! -z "$PS1" ]] && exec tmux
+

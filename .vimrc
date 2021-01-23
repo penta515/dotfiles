@@ -199,7 +199,7 @@ vmap <C-K> <Plug>(caw:i:toggle)
 " ------------------------------------
 syntax enable
 set background=dark
-colorscheme deus
+colorscheme gruvbox
 
 " ビープ音をすべて視覚表示する
 set visualbell
@@ -217,3 +217,4 @@ nnoremap wj <C-w>j
 nnoremap wk <C-w>k
 nnoremap wl <C-w>l
 nnoremap wh <C-w>h
+

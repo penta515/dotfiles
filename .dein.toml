@@ -1,0 +1,101 @@
+[[plugins]]
+repo = 'Shougo/neocomplete'
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+
+[[plugins]]
+repo = 'ConradIrwin/vim-bracketed-paste'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'tyru/caw.vim.git'
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'ajmwagar/vim-deus'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'morhetz/gruvbox'
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+on_i = 1
+merged = '0'
+hook_source = 'call coil398#init#coc#hook_source()'
+
+[[plugins]]
+repo = 'kien/ctrlp.vim'
+hook_add = '''
+
+  " # ctrlpバッファに入る時と出るときに使用する関数を定義
+  " # lightline.vimで表示しているステータスラインとの衝突を避けるため
+  let g:ctrlp_buffer_func = {
+    \ 'enter': 'CtrlPEnter',
+    \ 'exit': 'CtrlPLeave',
+  \ }
+
+  " # ctrlpに入るとき，ステータスラインの表示をoffに
+  function! CtrlPEnter()
+    set laststatus=0
+  endfunction
+
+  " # ctrlpから出るとき，ステータスラインの表示をonに
+  function! CtrlPLeave()
+    set laststatus=2
+  endfunction
+
+  " # ファイルを指定せずにvimを立ち上げた時に，自動的にctrlpを起動する
+  function CtrlPIfEmpty()
+    if @% == ""
+      CtrlP ~/
+    endif
+  endfunction
+
+  augroup AutoCtrlP
+    autocmd!
+    autocmd VimEnter * call CtrlPIfEmpty()
+  augroup END
+
+  " # 日本語検索をoff（私は基本的にディレクトリやファイル名に日本語を使用しないので）
+  let g:ctrlp_use_migemo = 0
+  " # あいまい検索をoff
+  let g:ctrlp_regexp = 1
+  " # キャッシュを使用して検索を高速化
+  let g:ctrlp_use_caching = 1
+  " # vim終了時にキャッシュをクリアしない
+  let g:ctrlp_clear_cache_on_exit = 0
+  " # <C-r>でキャッシュをクリアして再検索
+  let g:ctrlp_prompt_mappings = { 'PrtClearCache()': ['<C-r>'] }
+  " # 検索の際に200[ms]のウェイトを入れる（１文字入力の度に検索結果がコロコロ変わるのが気に入らないため）
+  let g:ctrlp_lazy_update = 200
+  " # 検索結果の表示ウィンドウの設定，10件分を表示（それ以上になってもスクロールされる）
+  let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:50'
+  " # 隠しファイルを表示しない
+  let g:ctrlp_show_hidden = 0
+  " # 検索してほしくないファイルやディレクトリを除外
+  let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v\.(exe|so|dll|o)$',
+    \ 'link': 'some_bad_symbolic_links',
+  \ }
+  " # silver searcher をインストールして検索コマンドをagに置き換え
+  " let g:ctrlp_user_command = "ag -g '\\.(cpp|hpp|c|h|py|txt|sh|bash|cfg|md|launch|xml|csv)$'"
+'''
+
+[[plugins]]
+repo = 'kassio/neoterm'

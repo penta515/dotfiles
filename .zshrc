@@ -52,9 +52,11 @@ if [ $UID = 0 ]; then
   SAVEHIST=0
 fi
 
-# git のデフォルトエディタを設定
-export GIT_EDITOR=vim
-alias vim='nvim'
+type nvim > /dev/null 2>&1
+if [ $? -eq 0 ] ; then
+  export GIT_EDITOR=vim
+  alias vim='nvim'
+fi
 
 # ==========================
 # completion settings
@@ -338,5 +340,3 @@ export NVM_DIR="$HOME/.nvm"
 # PROMPT settings
 # =======================
 PROMPT=$'%F{green}[%f %~ %F{green}]%f → '
-
-
